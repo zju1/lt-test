@@ -43,7 +43,7 @@ export const BookCardAuthor = styled("p")(({ theme }) => ({
   color: theme.palette.grey[500],
 }));
 
-export const BookCardMeta = styled("span")((theme) => ({
+export const BookCardMeta = styled("span")(() => ({
   margin: 0,
   textAlign: "left",
   fontFamily: "Inter Variable",

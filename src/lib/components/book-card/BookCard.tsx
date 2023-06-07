@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Stack } from "@mui/material";
 import { IBookResponse } from "../../../app/api/api.service";
 import {
@@ -11,7 +12,7 @@ import {
 const statuses = ["New", "Reading", "Finished"];
 
 export function BookCard(props: IBookResponse) {
-  const { author, cover, id, isbn, pages, published, title } = props.book;
+  const { author, cover, id, title } = props.book;
 
   return (
     <BookCardWrapper>
