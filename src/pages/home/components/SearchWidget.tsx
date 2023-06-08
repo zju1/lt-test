@@ -50,6 +50,11 @@ export function SearchWidget() {
         open={!!anchor}
         onClose={() => setAnchor(null)}
         anchorEl={anchor}
+        sx={{
+          "& .MuiPaper-root": {
+            maxWidth: isMobile ? `calc(100vw - 32px)` : width,
+          },
+        }}
         anchorOrigin={{
           horizontal: "center",
           vertical: "top",
@@ -62,7 +67,7 @@ export function SearchWidget() {
         <Stack>
           <Stack
             sx={{
-              width: isMobile ? `100vw` : width,
+              width: isMobile ? `calc(100vw - 32px)` : width,
               position: "relative",
             }}
           >
