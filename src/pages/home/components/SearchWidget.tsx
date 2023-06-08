@@ -7,7 +7,18 @@ import {
   StyledPopover,
 } from "../home.s";
 import { useRef, useState, useEffect } from "react";
-import { List, Stack, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Avatar,
+  CircularProgress,
+  List,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useHome } from "../../../app/providers/home-provider/context";
 
 export function SearchWidget() {
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
@@ -15,6 +26,10 @@ export function SearchWidget() {
   const [width, setWidth] = useState(100);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const {
+    state: { searchKey, searchResults, searchFetching },
+    actions: { setSearchKey },
+  } = useHome();
 
   useEffect(() => {
     if (buttonRef.current) {
@@ -54,9 +69,35 @@ export function SearchWidget() {
             <SearchIcon>
               <Search htmlColor="#aaa" fontSize="inherit" />
             </SearchIcon>
-            <SearchInput placeholder="Search..." autoFocus />
+            <SearchInput
+              placeholder="Search..."
+              autoFocus
+              value={searchKey}
+              onChange={(event) => {
+                setSearchKey(event.target.value);
+              }}
+            />
           </Stack>
-          <List />
+          {searchFetching ? (
+            <Stack py={5} alignItems="center" justifyContent="center">
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <List sx={{ maxHeight: "70vh", overflowY: "auto" }}>
+              {searchResults?.data &&
+                searchResults.data.map((item) => (
+                  <ListItemButton key={item.isbn}>
+                    <ListItemAvatar>
+                      <Avatar src={item.cover} alt={item.title} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={item.title}
+                      secondary={item.author}
+                    />
+                  </ListItemButton>
+                ))}
+            </List>
+          )}
         </Stack>
       </StyledPopover>
     </>

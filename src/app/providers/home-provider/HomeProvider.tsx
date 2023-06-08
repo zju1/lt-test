@@ -9,6 +9,7 @@ import {
   useCreateBookMutation,
   useDeleteBookMutation,
   useGetAllBooksQuery,
+  useSearchBooksQuery,
   useUpdateBookMutation,
 } from "../../api/api.service";
 import { useForm } from "react-hook-form";
@@ -17,8 +18,15 @@ import { toast } from "react-toastify";
 import { IBookResponse } from "../../api/api.service";
 import { useAppDispatch } from "../../store/store";
 import { logout } from "../../store/slices/authSlice";
+import { useDebouncedValue } from "../../../hooks/useDebouncedValue";
 
 export function HomeProvider() {
+  const [searchKey, setSearchKey] = useState("");
+  const key = useDebouncedValue(searchKey, 500);
+  const { data: searchResults, isFetching: searchFetching } =
+    useSearchBooksQuery(key, {
+      skip: !(key.length > 2),
+    });
   const [addOpen, setAddOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState<IBookResponse | null>(null);
   const [createBook, { isLoading }] = useCreateBookMutation();
@@ -106,6 +114,7 @@ export function HomeProvider() {
           handleEditClose,
           handleDelete,
           handleLogout,
+          setSearchKey,
         },
         state: {
           data,
@@ -114,6 +123,9 @@ export function HomeProvider() {
           addOpen,
           isLoading: isLoading || updateLoading || deleteLoading,
           currentBook,
+          searchResults,
+          searchKey,
+          searchFetching,
         },
       }}
     >

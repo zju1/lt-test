@@ -82,7 +82,7 @@ export const api = createApi({
     searchBooks: builder.query<BaseResponse<IBookSearchResponse[]>, string>({
       query: (title) => ({
         url: `books/${title}`,
-        headers: setHeaders("GET", `books/${title}`, {}),
+        headers: setHeaders("GET", `books/${title}`),
       }),
       providesTags: ["SEARCH"],
     }),

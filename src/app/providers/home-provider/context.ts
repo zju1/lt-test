@@ -6,7 +6,7 @@ import {
   WithFormActions,
   WithFormState,
 } from "../../../@types";
-import { IBookResponse } from "../../api/api.service";
+import { IBookResponse, IBookSearchResponse } from "../../api/api.service";
 
 type HomeContextProps = BaseProvider<
   WithFormState<{
@@ -15,6 +15,9 @@ type HomeContextProps = BaseProvider<
     isLoading: boolean;
     addOpen: boolean;
     currentBook: IBookResponse | null;
+    searchResults: BaseResponse<IBookSearchResponse[]> | undefined;
+    searchKey: string;
+    searchFetching: boolean;
   }>,
   WithFormActions<{
     setAddOpen: any;
@@ -23,6 +26,7 @@ type HomeContextProps = BaseProvider<
     handleEditClose: any;
     handleDelete: any;
     handleLogout: any;
+    setSearchKey: any;
   }>
 >;
 
