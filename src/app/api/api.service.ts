@@ -86,6 +86,25 @@ export const api = createApi({
       }),
       providesTags: ["SEARCH"],
     }),
+
+    updateBook: builder.mutation<BaseResponse, { status: number; id: string }>({
+      query: ({ id, status }) => ({
+        url: `books/${id}`,
+        body: { status },
+        method: "PATCH",
+        headers: setHeaders("PATCH", `books/${id}`, { status }),
+      }),
+      invalidatesTags: ["BOOKS"],
+    }),
+
+    deleteBook: builder.mutation<BaseResponse, { id: string }>({
+      query: ({ id }) => ({
+        url: `books/${id}`,
+        method: "DELETE",
+        headers: setHeaders("DELETE", `books/${id}`),
+      }),
+      invalidatesTags: ["BOOKS"],
+    }),
     /* Book APIs END */
     /* -------------------------------------------------------------------------------------------------- */
   }),
@@ -97,4 +116,6 @@ export const {
   useCreateBookMutation,
   useGetAllBooksQuery,
   useSearchBooksQuery,
+  useUpdateBookMutation,
+  useDeleteBookMutation,
 } = api;

@@ -2,7 +2,9 @@
 import { ButtonBase, alpha, styled } from "@mui/material";
 
 export const BookCardWrapper = styled(ButtonBase)(({ theme }) => ({
-  display: "grid",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
   borderRadius: theme.shape.borderRadius,
   gap: 10,
   position: "relative",
@@ -10,10 +12,12 @@ export const BookCardWrapper = styled(ButtonBase)(({ theme }) => ({
 
 export const BookCardImage = styled("img")(({ theme }) => ({
   objectFit: "cover",
-  objectPosition: "center",
   width: "100%",
-  height: 230,
+  height: 250,
+  flexShrink: 0,
+  flexGrow: 0,
   borderRadius: theme.shape.borderRadius,
+  pointerEvents: "none",
   [theme.breakpoints.down("md")]: {
     height: 200,
   },
@@ -23,23 +27,27 @@ export const BookCardTitle = styled("h4")(({ theme }) => ({
   margin: 0,
   textAlign: "left",
   fontFamily: "Inter Variable",
-  fontSize: 18,
+  fontSize: 16,
   lineHeight: "20px",
   fontWeight: "600",
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 2,
+  overflow: "hidden",
   [theme.breakpoints.down("md")]: {
-    fontSize: 16,
+    fontSize: 14,
   },
   [theme.breakpoints.down("sm")]: {
-    fontSize: 14,
+    fontSize: 12,
+    lineHeight: "16px",
   },
 }));
 
 export const BookCardAuthor = styled("p")(({ theme }) => ({
-  margin: 0,
   textAlign: "left",
+  fontWeight: "500",
   fontFamily: "Inter Variable",
   fontSize: 12,
-  lineHeight: "14px",
   color: theme.palette.grey[500],
 }));
 

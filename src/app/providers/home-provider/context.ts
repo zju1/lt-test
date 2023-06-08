@@ -14,9 +14,15 @@ type HomeContextProps = BaseProvider<
     isFetching: boolean;
     isLoading: boolean;
     addOpen: boolean;
+    currentBook: IBookResponse | null;
   }>,
   WithFormActions<{
     setAddOpen: any;
+    handleAddClose: any;
+    setCurrentBook: any;
+    handleEditClose: any;
+    handleDelete: any;
+    handleLogout: any;
   }>
 >;
 

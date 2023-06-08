@@ -1,4 +1,4 @@
-import { Add } from "@mui/icons-material";
+import { Add, Logout } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -6,6 +6,7 @@ import {
   Container,
   Divider,
   Fab,
+  IconButton,
   Stack,
   Typography,
   useMediaQuery,
@@ -16,17 +17,20 @@ import { useHome } from "../../app/providers/home-provider/context";
 import { EmptyImage } from "./home.s";
 import { AddBookDialog } from "./components/AddBookDialog";
 import { BookCard } from "../../lib/components";
+import { EditBookDialog } from "./components/EditBookDialog";
 export function Home() {
   const {
-    state: { data, isFetching },
+    state: { data, isFetching, currentBook, addOpen },
+    actions: {
+      setCurrentBook,
+      handleEditClose,
+      setAddOpen,
+      handleAddClose,
+      handleLogout,
+    },
   } = useHome();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const {
-    actions: { setAddOpen },
-    state: { addOpen },
-  } = useHome();
-
   return (
     <Box>
       <Container fixed maxWidth="md">
@@ -51,6 +55,9 @@ export function Home() {
                 Add a book
               </Button>
             )}
+            <Button onClick={handleLogout} variant="light">
+              <Logout />
+            </Button>
           </Stack>
           <Stack spacing={2} py={2}>
             <Stack spacing={1.5}>
@@ -80,7 +87,11 @@ export function Home() {
                 })}
               >
                 {data.data.map((item) => (
-                  <BookCard {...item} key={item.book.id} />
+                  <BookCard
+                    {...item}
+                    key={item.book.id}
+                    onClick={setCurrentBook}
+                  />
                 ))}
               </Stack>
             ) : (
@@ -98,15 +109,21 @@ export function Home() {
               onClick={() => setAddOpen(true)}
               variant="extended"
               color="primary"
-              size="large"
-              sx={{ position: "fixed", bottom: 16, right: 16 }}
+              sx={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+                paddingX: "24px",
+                height: 60,
+              }}
             >
               <Add />
               Add a book
             </Fab>
           )}
         </Stack>
-        <AddBookDialog open={addOpen} onClose={() => setAddOpen(false)} />
+        <AddBookDialog open={addOpen} onClose={handleAddClose} />
+        <EditBookDialog open={!!currentBook} onClose={handleEditClose} />
       </Container>
     </Box>
   );

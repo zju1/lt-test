@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createTheme } from "@mui/material";
+import { alpha, createTheme } from "@mui/material";
 
 export const appTheme = createTheme({
   palette: {
@@ -64,13 +64,28 @@ export const appTheme = createTheme({
       },
       variants: [
         {
-          props: { ["data-variant" as any]: "light" },
+          props: { ["data-variant" as any]: "light", color: "primary" },
           style: ({ theme }) => ({
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: alpha(theme.palette.primary.main, 0.1),
             color: theme.palette.primary.main,
             "&:hover": {
               boxShadow: "none",
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: alpha(theme.palette.primary.main, 0.1),
+              filter: "brightness(95%)",
+            },
+            "&:active": {
+              filter: "brightness(105%)",
+            },
+          }),
+        },
+        {
+          props: { ["data-variant" as any]: "light", color: "error" },
+          style: ({ theme }) => ({
+            backgroundColor: alpha(theme.palette.error.light, 0.2),
+            color: theme.palette.error.main,
+            "&:hover": {
+              boxShadow: "none",
+              backgroundColor: alpha(theme.palette.error.light, 0.2),
               filter: "brightness(95%)",
             },
             "&:active": {
